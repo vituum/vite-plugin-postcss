@@ -20,21 +20,27 @@ const defaultOptions = {
  * @param {import('@vituum/vite-plugin-postcss/types/index.d.ts').PluginUserConfig} options
  * @returns {import('vite').Plugin}
  */
-const plugin = (options) => {
+const plugin = (options = {}) => {
     options = merge(defaultOptions, options)
 
-    const postcssPlugins = [postcssImport(options.import), postcssNesting(options.nesting), postcssCustomMedia(options.customMedia), autoprefixer(options.autoprefixer)]
+    const postcssPlugins = [
+        postcssImport(options.import),
+        postcssNesting(options.nesting),
+        postcssCustomMedia(options.customMedia),
+        autoprefixer(options.autoprefixer)
+    ]
 
     return {
         name,
         enforce: 'pre',
         config (userConfig) {
             // @ts-ignore
-            if (!userConfig?.css?.postcss?.plugins) {
+            if (!userConfig?.css?.postcss && !userConfig?.css?.postcss?.plugins) {
                 userConfig.css = userConfig.css || {}
                 userConfig.css.postcss = userConfig.css.postcss || {}
                 userConfig.css.postcss.plugins = postcssPlugins
-            } else {
+                // @ts-ignore
+            } else if (userConfig.css.postcss.plugins) {
                 // @ts-ignore
                 userConfig.css.postcss.plugins = postcssPlugins.concat(...userConfig.css.postcss.plugins)
             }
