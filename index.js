@@ -7,7 +7,7 @@ import { getPackageInfo, merge } from 'vituum/utils/common.js'
 const { name } = getPackageInfo(import.meta.url)
 
 /**
- * @type {import('@vituum/vite-plugin-postcss/types/index.d.ts').PluginUserConfig}
+ * @type {import('@vituum/vite-plugin-postcss/types/index').PluginUserConfig}
  */
 const defaultOptions = {
     import: {},
@@ -17,7 +17,7 @@ const defaultOptions = {
 }
 
 /**
- * @param {import('@vituum/vite-plugin-postcss/types/index.d.ts').PluginUserConfig} options
+ * @param {import('@vituum/vite-plugin-postcss/types/index').PluginUserConfig} options
  * @returns {import('vite').Plugin}
  */
 const plugin = (options = {}) => {
@@ -33,15 +33,13 @@ const plugin = (options = {}) => {
     return {
         name,
         enforce: 'pre',
+        /** @param {import('@vituum/vite-plugin-postcss/types/viteUserConfig').ViteUserConfig} userConfig */
         config (userConfig) {
-            // @ts-ignore
             if (!userConfig?.css?.postcss && !userConfig?.css?.postcss?.plugins) {
                 userConfig.css = userConfig.css || {}
                 userConfig.css.postcss = userConfig.css.postcss || {}
                 userConfig.css.postcss.plugins = postcssPlugins
-                // @ts-ignore
             } else if (userConfig.css.postcss.plugins) {
-                // @ts-ignore
                 userConfig.css.postcss.plugins = postcssPlugins.concat(...userConfig.css.postcss.plugins)
             }
         }
