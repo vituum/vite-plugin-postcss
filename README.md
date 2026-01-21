@@ -28,4 +28,4 @@ Read the [docs](https://vituum.dev/plugins/postcss.html) to learn more about plu
 ### Requirements
 
 - [Node.js LTS (24.x)](https://nodejs.org/en/download/)
-- [Vite (8.x)](https://vitejs.dev/)
+- [Vite](https://vitejs.dev/)
